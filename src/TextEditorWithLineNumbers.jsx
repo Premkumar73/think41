@@ -4,6 +4,7 @@ export default function TextEditorWithLineNumbers() {
   const [text, setText] = useState("");
   const [jumpLine, setJumpLine] = useState("");
   const [highlightLine, setHighlightLine] = useState(null);
+
   const textAreaRef = useRef(null);
   const lineNumbersRef = useRef(null);
 
@@ -40,11 +41,11 @@ export default function TextEditorWithLineNumbers() {
       textAreaRef.current.focus();
       textAreaRef.current.setSelectionRange(start, end);
     }
-  }, [highlightLine]);
+  }, [highlightLine, text]);
 
   return (
     <div className="container my-4">
-      <h2 className="mb-4">Text Editor with Line Numbers & Jump</h2>
+      <h4 className="mb-3">Text Editor with Line Numbers & Jump</h4>
 
       <div className="d-flex border rounded overflow-hidden" style={{ height: "320px" }}>
         <textarea
@@ -60,7 +61,6 @@ export default function TextEditorWithLineNumbers() {
             fontFamily: "monospace",
           }}
         />
-
         <textarea
           ref={textAreaRef}
           value={text}
@@ -88,24 +88,6 @@ export default function TextEditorWithLineNumbers() {
         <button className="btn btn-primary" onClick={handleJump}>
           Jump
         </button>
-      </div>
-
-      <div className="mt-3">
-        <input
-          type="file"
-          accept=".txt"
-          className="form-control w-50"
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                setText(e.target.result);
-              };
-              reader.readAsText(file);
-            }
-          }}
-        />
       </div>
     </div>
   );
